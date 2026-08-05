@@ -1,5 +1,7 @@
 import { Button } from "./Button";
 
+
+
 export function Card() {
   return (
     <div className="w-full bg-white p-4">
@@ -10,8 +12,8 @@ export function Card() {
       <strong>Como fazer pão francês</strong>
       <p>Aprenda a fazer um pão francês crocante por fora e macio por dentro</p>
       <div className="flex gap-2">
-        <Button className="w-full justify-center">Visualizar</Button>
-        <Button className="w-full justify-center">Editar</Button>
+        <Button variant="secondary" className="w-full justify-center text-icon font-bold">Visualizar</Button>
+        <Button variant="secondary" className="w-full justify-center text-[#57534D] font-bold">Editar</Button>
       </div>
     </div>
   );

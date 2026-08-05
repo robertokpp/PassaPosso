@@ -1,13 +1,20 @@
 import { Button } from "../components/Button";
 import { Input } from "../components/Input";
-import { Select } from "../components/Select";
 import { Textarea } from "../components/Textarea";
 
+import iconArrow from "../assets/icon-arrow.svg"
+
+import { useNavigate } from "react-router";
+
 export function NewStage() {
+  const navigate = useNavigate();
   return (
     <main className="flex flex-col">
       <header className="flex justify-between py-4 px-6 bg-white items-center">
-        <Button>Cancelar</Button>
+        <Button variant="secondary" onClick={() => navigate(-1)}>
+          <img src={iconArrow} alt="Icon de flecha" />
+          Cancelar
+        </Button>
         <strong>Nova etapa</strong>
         <Button>Salvar etapa</Button>
       </header>

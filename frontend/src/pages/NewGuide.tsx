@@ -1,14 +1,26 @@
 import { Button } from "../components/Button";
-import { Header } from "../components/Header";
 import { Input } from "../components/Input";
 import { Select } from "../components/Select";
 import { Textarea } from "../components/Textarea";
 
+import iconArrow from "../assets/icon-arrow.svg";
+import iconAddOrange from "../assets/icon-addOrange.svg"
+
+import { useNavigate } from "react-router";
+
 export function NewGuide() {
+  const navigate = useNavigate();
+
   return (
     <main className="flex flex-col">
       <header className="flex justify-between py-4 px-6 bg-white">
-        <Button>Voltar</Button>
+        <Button
+          variant="secondary"
+          onClick={() => navigate("/")}
+        >
+          <img src={iconArrow} alt="icon de flecha" />
+          Voltar
+        </Button>
         <Button>Salvar guia</Button>
       </header>
 
@@ -28,6 +40,10 @@ export function NewGuide() {
             </Select>
           </form>
         </div>
+
+        <Button variant="secondary" className="text-icon" onClick={()=> navigate("/nova-etapa")}>
+          <img src={iconAddOrange} alt="Icon de add" />
+          Adicionar etapa</Button>
       </section>
     </main>
   );
