@@ -1,7 +1,7 @@
 import "dotenv/config";
 import { app } from "./app.js";
 import { env } from "./config/env.js";
-import { database } from "./lib/database.js";
+import { database } from "./lib/prisma.js";
 
 const server = app.listen(env.port, () => {
   console.log(`API disponível na porta ${env.port}`);
@@ -17,4 +17,3 @@ async function shutdown(signal: string) {
 
 process.on("SIGTERM", () => void shutdown("SIGTERM"));
 process.on("SIGINT", () => void shutdown("SIGINT"));
-

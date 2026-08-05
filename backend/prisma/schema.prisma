@@ -1,0 +1,63 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Guide {
+  id String @id @default(uuid())
+
+  title       String
+  description String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  categoryId String
+  category   Category @relation(fields: [categoryId], references: [id])
+
+  stages Stage[]
+
+  @@map("guide")
+}
+
+model Category {
+  id String @id @default(uuid())
+
+  name   String
+  active Boolean @default(true)
+
+  guides    Guide[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("category")
+}
+
+model Stage {
+  id String @id @default(uuid())
+
+  title       String
+  description String
+  time        String
+
+  picture String?
+  video   String?
+
+  guideId String
+  guide   Guide  @relation(fields: [guideId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([guideId])
+  @@map("stage")
+}
