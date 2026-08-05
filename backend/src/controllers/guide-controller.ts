@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import { AppError } from "@/utils/AppError";
-import { prisma } from "@/lib/prisma";
+import { AppError } from "../utils/AppError.js";
+import { prisma } from "../lib/prisma.js";
 import { z } from "zod";
 
 class GuideController {
@@ -28,6 +28,12 @@ class GuideController {
         categoryId,
       },
     });
+
+    return response.json(guide);
+  }
+
+  async index(request: Request, response: Response) {
+    const guide = await prisma.guide.findMany({});
 
     return response.json(guide);
   }
