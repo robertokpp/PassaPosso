@@ -18,6 +18,12 @@ class CategoryController {
 
     return response.json();
   }
+
+  async index(request: Request, response: Response) {
+    const category = await prisma.category.findMany({});
+
+    return response.json(category);
+  }
 }
 
 export { CategoryController };

@@ -18,6 +18,17 @@ services:
       timeout: 5s
       retries: 10
 
+  migrate:
+    build:
+      context: ./backend
+      target: build
+    environment:
+      DATABASE_URL: postgresql://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-postgres}@database:5432/${POSTGRES_DB:-app}
+    command: ["npx", "prisma", "migrate", "deploy"]
+    depends_on:
+      database:
+        condition: service_healthy
+
   backend:
     build:
       context: ./backend
@@ -30,9 +41,13 @@ services:
       DATABASE_URL: postgresql://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-postgres}@database:5432/${POSTGRES_DB:-app}
     ports:
       - "${API_PORT:-3333}:3333"
+    volumes:
+      - uploads_data:/app/uploads
     depends_on:
       database:
         condition: service_healthy
+      migrate:
+        condition: service_completed_successfully
     healthcheck:
       test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:3333/health').then(r=>{if(!r.ok)process.exit(1)}).catch(()=>process.exit(1))"]
       interval: 10s
@@ -42,4 +57,4 @@ services:
 
 volumes:
   postgres_data:
-
+  uploads_data:

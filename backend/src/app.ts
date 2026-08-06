@@ -1,4 +1,5 @@
 import { errorHandling } from "./middlewares/error-handling.js";
+import { uploadDirectory } from "./config/upload.js";
 import { router } from "./routes/index.js";
 import express from "express";
 import "express-async-error";
@@ -12,6 +13,7 @@ const allowedOrigins = process.env.APP_ORIGIN?.split(",")
 
 app.use(cors({ origin: allowedOrigins?.length ? allowedOrigins : true }));
 app.use(express.json());
+app.use("/uploads", express.static(uploadDirectory));
 app.get("/health", (_request, response) => {
   response.status(200).json({ status: "ok" });
 });

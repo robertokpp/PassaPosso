@@ -25,16 +25,15 @@ class GuideController {
       data: {
         title,
         description,
-        categoryId,
+        categoryId
       },
     });
 
-    return response.json(guide);
+    return response.json(guide.id);
   }
 
   async index(request: Request, response: Response) {
     const guide = await prisma.guide.findMany({});
-
     return response.json(guide);
   }
 }

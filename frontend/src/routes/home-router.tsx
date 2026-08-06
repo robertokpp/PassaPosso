@@ -10,7 +10,7 @@ export function HomeRoute() {
     <Routes>
       <Route path="/" element={<Home />}></Route>
       <Route path="/nova-guia" element={<NewGuide/>}></Route>
-      <Route path="/nova-etapa" element={<NewStage/>}></Route>
+      <Route path="/nova-etapa/:guideId" element={<NewStage/>}></Route>
     </Routes>
   );
 }

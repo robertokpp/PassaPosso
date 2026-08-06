@@ -1,11 +1,11 @@
 import { twMerge } from "tailwind-merge";
 
-type Props = React.ComponentProps<"input"> & {
+type Props = React.ComponentProps<"select"> & {
   legend: string;
-  id: string
+  id: string;
 };
 
-export function Select({ legend, id, className, children }: Props) {
+export function Select({ legend, id, className, children, ...Rest }: Props) {
   return (
     <fieldset>
       <legend className="uppercase text-[#79716B]">{legend}</legend>
@@ -15,6 +15,7 @@ export function Select({ legend, id, className, children }: Props) {
           "w-full border px-4 py-2.5 rounded-xl border-[#E7E5E4]",
           className,
         )}
+        {...Rest}
       >
         {children}
       </select>
