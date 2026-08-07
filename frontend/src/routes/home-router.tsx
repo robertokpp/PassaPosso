@@ -4,6 +4,7 @@ import { Home } from "../pages/Home";
 import { NewGuide } from "../pages/NewGuide";
 import { NewStage } from "../pages/NewStage";
 import { NewCategory } from "../pages/NewCategory";
+import { ViewerGuide } from "../pages/ViewerGuide";
 
 export function HomeRoute() {
   return (
@@ -12,6 +13,7 @@ export function HomeRoute() {
       <Route path="/nova-guia" element={<NewGuide />}></Route>
       <Route path="/nova-etapa/:guideId" element={<NewStage />}></Route>
       <Route path="/category" element={<NewCategory />}></Route>
+      <Route path="/guia/:id" element={<ViewerGuide />}></Route>
     </Routes>
   );
 }

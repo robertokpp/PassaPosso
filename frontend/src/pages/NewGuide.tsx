@@ -66,7 +66,7 @@ export function NewGuide() {
   return (
     <main className="flex flex-col">
       <header className="flex justify-between bg-white px-6 py-4">
-        <Button variant="secondary" onClick={() => navigate("/")}>
+        <Button variant="tertiary" onClick={() => navigate("/")}>
           <img src={iconArrow} alt="Ícone de flecha" />
           Voltar
         </Button>

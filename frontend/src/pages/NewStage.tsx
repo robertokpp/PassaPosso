@@ -6,6 +6,7 @@ import { z } from "zod";
 import { Button } from "../components/Button";
 import { Input } from "../components/Input";
 import { Textarea } from "../components/Textarea";
+import { Section } from "../components/Section";
 import { api } from "../services/api";
 
 import iconArrow from "../assets/icon-arrow.svg";
@@ -111,7 +112,8 @@ export function NewStage() {
 
       if (axios.isAxiosError<{ message?: string }>(error)) {
         setErrorMessage(
-          error.response?.data?.message ?? "Não foi possível cadastrar a etapa.",
+          error.response?.data?.message ??
+            "Não foi possível cadastrar a etapa.",
         );
         return;
       }
@@ -119,7 +121,6 @@ export function NewStage() {
       setErrorMessage(
         error instanceof Error ? error.message : "Ocorreu um erro inesperado.",
       );
-      
     } finally {
       setIsSubmitting(false);
     }
@@ -129,7 +130,11 @@ export function NewStage() {
     <main className="flex flex-col">
       <form onSubmit={onSubmit}>
         <header className="flex items-center justify-between bg-white px-6 py-4">
-          <Button type="button" variant="secondary" onClick={() => navigate(-1)}>
+          <Button
+            type="button"
+            variant="secondary"
+            onClick={() => navigate(-1)}
+          >
             <img src={iconArrow} alt="Ícone de flecha" />
             Cancelar
           </Button>
@@ -139,7 +144,7 @@ export function NewStage() {
           </Button>
         </header>
 
-        <section className="h-fit w-full space-y-6 bg-background px-6 py-8">
+        <Section>
           <div className="rounded-2xl bg-white p-6">
             <div className="space-y-4">
               <Input
@@ -165,7 +170,6 @@ export function NewStage() {
               />
             </div>
           </div>
-
           <div className="space-y-4 rounded-2xl bg-white p-6">
             <strong>Mídia</strong>
 
@@ -226,7 +230,8 @@ export function NewStage() {
               </p>
             )}
           </div>
-        </section>
+        </Section>
+
       </form>
     </main>
   );

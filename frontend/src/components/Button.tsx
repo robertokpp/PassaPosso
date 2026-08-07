@@ -7,7 +7,8 @@ type Props = React.ComponentProps<"button"> & {
 
 const variants = {
   primary: "bg-icon",
-  secondary: "bg-transparent border-none text-[#79716B]",
+  secondary: "bg-transparent border-none text-icon hover:bg-icon/10",
+  tertiary: "bg-transparent border-none text-[#79716B] hover:bg-[#79716B]/10"
 };
 
 export function Button({

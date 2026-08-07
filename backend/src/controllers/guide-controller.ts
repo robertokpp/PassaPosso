@@ -3,6 +3,7 @@ import { AppError } from "../utils/AppError.js";
 import { prisma } from "../lib/prisma.js";
 import { z } from "zod";
 
+
 class GuideController {
   async create(request: Request, response: Response) {
     const bodySchema = z.object({
@@ -25,7 +26,7 @@ class GuideController {
       data: {
         title,
         description,
-        categoryId
+        categoryId,
       },
     });
 
@@ -33,7 +34,18 @@ class GuideController {
   }
 
   async index(request: Request, response: Response) {
-    const guide = await prisma.guide.findMany({});
+    const guideResponse = await prisma.guide.findMany({
+      include: { category: true },
+    });
+
+    const guide = guideResponse.map((guide) => ({
+      id: guide.id,
+      title: guide.title,
+      description: guide.description,
+      category: guide.category.name,
+      data: guide.updatedAt,
+    }));
+
     return response.json(guide);
   }
 }
