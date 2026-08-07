@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
-import { string, z } from "zod";
+import {  z } from "zod";
 
 import { Button } from "../components/Button";
 import { Input } from "../components/Input";
@@ -30,6 +30,7 @@ export function NewGuide() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [categoryId, setCategoryId] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   async function loadCategories() {
     const response = await api.get<Category[]>("/category");
@@ -37,21 +38,25 @@ export function NewGuide() {
   }
 
   async function onSubmit() {
-    const data = bodySchema.parse({
-      title,
-      description,
-      categoryId,
-    });
+    try {
+      setIsSubmitting(true);
+      const data = bodySchema.parse({
+        title,
+        description,
+        categoryId,
+      });
 
-    const response = await api.post("/guide", data);
+      const response = await api.post("/guide", data);
 
-    setTitle("");
-    setDescription("");
-    setCategoryId("");
+      setTitle("");
+      setDescription("");
+      setCategoryId("");
 
-    navigate(`/nova-etapa/${response.data}`);
-
-    console.log(response.data);
+      navigate(`/nova-etapa/${response.data}`);
+    } catch (error) {
+    } finally {
+      setIsSubmitting(false);
+    }
   }
 
   useEffect(() => {
@@ -66,7 +71,9 @@ export function NewGuide() {
           Voltar
         </Button>
 
-        <Button onClick={onSubmit}>Salvar guia</Button>
+        <Button onClick={onSubmit} disabled={isSubmitting}>
+          {isSubmitting ? "Salvando..." : "Salvar guia"}
+        </Button>
       </header>
 
       <section className="h-fit w-full bg-background px-6 py-8">

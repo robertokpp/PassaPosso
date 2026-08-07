@@ -119,6 +119,7 @@ export function NewStage() {
       setErrorMessage(
         error instanceof Error ? error.message : "Ocorreu um erro inesperado.",
       );
+      
     } finally {
       setIsSubmitting(false);
     }
