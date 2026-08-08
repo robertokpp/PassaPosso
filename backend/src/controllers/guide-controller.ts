@@ -57,6 +57,7 @@ class GuideController {
 
     const guide = await prisma.guide.findUnique({
       where: { id },
+      include: { category: true, stages: true}
     });
 
     if (!guide) {
