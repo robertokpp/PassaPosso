@@ -3,7 +3,6 @@ import { AppError } from "../utils/AppError.js";
 import { prisma } from "../lib/prisma.js";
 import { z } from "zod";
 
-
 class GuideController {
   async create(request: Request, response: Response) {
     const bodySchema = z.object({
@@ -45,6 +44,24 @@ class GuideController {
       category: guide.category.name,
       data: guide.updatedAt,
     }));
+
+    return response.json(guide);
+  }
+
+  async show(request: Request, response: Response) {
+    const paramsSchema = z.object({
+      id: z.uuid(),
+    });
+
+    const { id } = paramsSchema.parse(request.params);
+
+    const guide = await prisma.guide.findUnique({
+      where: { id },
+    });
+
+    if (!guide) {
+      throw new AppError("Guia não encontrada!", 404);
+    }
 
     return response.json(guide);
   }

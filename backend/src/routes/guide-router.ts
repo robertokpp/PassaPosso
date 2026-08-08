@@ -6,5 +6,6 @@ const guideController = new GuideController();
 
 guideRouter.post("/", guideController.create);
 guideRouter.get("/", guideController.index);
+guideRouter.get("/:id", guideController.show);
 
 export { guideRouter };

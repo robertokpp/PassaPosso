@@ -24,7 +24,6 @@ export function Home() {
 
   async function handlerListCards() {
     const response = await api.get("/guide");
-    console.log(response.data);
     setGuides(response.data);
   }
 
