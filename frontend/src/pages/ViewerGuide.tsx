@@ -9,12 +9,14 @@ import { api, baseURL } from "../services/api";
 import { useEffect, useState } from "react";
 
 interface Stage {
+  id: string;
   title: string;
   description: string;
   category: {
     name: string;
   };
   stages: {
+    id: string;
     description: string;
     time: string;
     picture?: string;
@@ -32,7 +34,6 @@ export function ViewerGuide() {
     try {
       const response = await api.get(`guide/${id}`);
       setStages(response.data);
-      console.log(response.data);
     } catch (error) {}
   }
 
@@ -50,10 +51,9 @@ export function ViewerGuide() {
       </Header>
 
       <Section>
-        <div className="bg-icon w-full px-4"></div>
         <div>
           {stages ? (
-            <div className="flex flex-col gap-2">
+            <div key={stages.id} className="flex flex-col gap-2">
               <div>
                 <span className="px-3 py-0.5 bg-[#FFEDD4] rounded-[999px]">
                   {stages.category.name}
@@ -62,10 +62,10 @@ export function ViewerGuide() {
               <strong>{stages.title}</strong>
               <p>{stages.description}</p>
 
-              {stages?.stages ? (
+              {stages?.stages.length != 0 ? (
                 <div className="flex flex-col gap-4">
                   {stages?.stages.map((stage, index) => (
-                    <div className="rounded-2xl">
+                    <div key={stage.id} className="rounded-2xl">
                       <div className="flex w-full justify-between items-center bg-icon px-6 py-4 rounded-t-2xl">
                         <div className="w-9 h-9 p-1 bg-white/50 rounded-full flex justify-center items-center">
                           <p className="text-white">{index + 1}</p>
@@ -89,18 +89,14 @@ export function ViewerGuide() {
                         )}
 
                         <div className="p-6 bg-white rounded-b-2xl">
-                          <p>
-                            {stage.description}
-                          </p>
+                          <p>{stage.description}</p>
                         </div>
                       </div>
                     </div>
                   ))}
                 </div>
               ) : (
-                <div>
-                  <p>ainda nao tem nenhuma!</p>
-                </div>
+                <div className="w-full rounded-2xl bg-white p-4"></div>
               )}
             </div>
           ) : (
@@ -108,6 +104,21 @@ export function ViewerGuide() {
               <p>ainda nao tem nenhuma!</p>
             </div>
           )}
+        </div>
+
+
+        <div>
+          {stages?.stages.length != 0 <!DOCTYPE html>
+          <html lang="en">
+          <head>
+            <meta charset="UTF-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+            <title>Document</title>
+          </head>
+          <body>
+            
+          </body>
+          </html> () : ()}
         </div>
       </Section>
     </>
