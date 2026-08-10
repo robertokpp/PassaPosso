@@ -43,84 +43,66 @@ export function ViewerGuide() {
 
   return (
     <>
-      <Header>
-        <Button variant="tertiary" onClick={() => navigate("/")}>
-          <img src={iconArrow} alt="Ícone de flecha" />
-          Voltar
-        </Button>
-      </Header>
-
-      <Section>
-        <div>
-          {stages ? (
-            <div key={stages.id} className="flex flex-col gap-2">
-              <div>
-                <span className="px-3 py-0.5 bg-[#FFEDD4] rounded-[999px]">
-                  {stages.category.name}
-                </span>
-              </div>
-              <strong>{stages.title}</strong>
-              <p>{stages.description}</p>
-
-              {stages?.stages.length != 0 ? (
-                <div className="flex flex-col gap-4">
-                  {stages?.stages.map((stage, index) => (
-                    <div key={stage.id} className="rounded-2xl">
-                      <div className="flex w-full justify-between items-center bg-icon px-6 py-4 rounded-t-2xl">
-                        <div className="w-9 h-9 p-1 bg-white/50 rounded-full flex justify-center items-center">
-                          <p className="text-white">{index + 1}</p>
-                        </div>
-                        <strong className="text-white">{stage.title}</strong>
-                        <small className="text-white">{`${stage.time} min`}</small>
-                      </div>
-                      <div>
-                        {stage.picture && (
-                          <img src={`${baseURL}${stage.picture}`} alt="" />
-                        )}
-
-                        {stage.video && (
-                          <video width="640" height="360" controls>
-                            <source
-                              src={`${baseURL}${stage.video}`}
-                              type="video/mp4"
-                            />
-                            Seu navegador não suporta a tag de vídeo.
-                          </video>
-                        )}
-
-                        <div className="p-6 bg-white rounded-b-2xl">
-                          <p>{stage.description}</p>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              ) : (
-                <div className="w-full rounded-2xl bg-white p-4"></div>
-              )}
-            </div>
-          ) : (
+      {stages && stages?.stages.length != 0 ? (
+        <>
+          <Header>
+            <Button variant="tertiary" onClick={() => navigate("/")}>
+              <img src={iconArrow} alt="Ícone de flecha" />
+              Voltar
+            </Button>
+          </Header>
+          <Section>
             <div>
-              <p>ainda nao tem nenhuma!</p>
+              <span className="px-3 py-0.5 bg-[#FFEDD4] rounded-[999px]">
+                {stages.category.name}
+              </span>
             </div>
-          )}
-        </div>
+            <strong>{stages.title}</strong>
+            <p>{stages.description}</p>
 
+            <div className="flex flex-col gap-4">
+              {stages?.stages.map((stage, index) => (
+                <div key={stage.id} className="rounded-2xl">
+                  <div className="flex w-full justify-between items-center bg-icon px-6 py-4 rounded-t-2xl">
+                    <div className="w-9 h-9 p-1 bg-white/50 rounded-full flex justify-center items-center">
+                      <p className="text-white">{index + 1}</p>
+                    </div>
+                    <strong className="text-white">{stage.title}</strong>
+                    <small className="text-white">{`${stage.time} min`}</small>
+                  </div>
+                  <div>
+                    {stage.picture && (
+                      <img src={`${baseURL}${stage.picture}`} alt="" />
+                    )}
 
-        <div>
-          {stages?.stages.length != 0 <!DOCTYPE html>
-          <html lang="en">
-          <head>
-            <meta charset="UTF-8" />
-            <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-            <title>Document</title>
-          </head>
-          <body>
-            
-          </body>
-          </html> () : ()}
+                    {stage.video && (
+                      <video width="640" height="360" controls>
+                        <source
+                          src={`${baseURL}${stage.video}`}
+                          type="video/mp4"
+                        />
+                        Seu navegador não suporta a tag de vídeo.
+                      </video>
+                    )}
+
+                    <div className="p-6 bg-white rounded-b-2xl">
+                      <p>{stage.description}</p>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </Section>
+        </>
+      ) : (
+        <div className="flex flex-col gap-4 items-center justify-center h-screen">
+          <p>Este guia ainda não tem etapas.</p>
+          <Button variant="tertiary" onClick={() => navigate("/")}>
+            <img src={iconArrow} alt="ícone de flecha" />
+            Voltar
+          </Button>
         </div>
-      </Section>
+      )}
     </>
   );
 }

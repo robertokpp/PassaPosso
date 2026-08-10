@@ -11,6 +11,7 @@ export function HomeRoute() {
     <Routes>
       <Route path="/" element={<Home />}></Route>
       <Route path="/nova-guia" element={<NewGuide />}></Route>
+      <Route path="/nova-guia/:id" element={<NewGuide />}></Route>
       <Route path="/nova-etapa/:guideId" element={<NewStage />}></Route>
       <Route path="/category" element={<NewCategory />}></Route>
       <Route path="/guia/:id" element={<ViewerGuide />}></Route>

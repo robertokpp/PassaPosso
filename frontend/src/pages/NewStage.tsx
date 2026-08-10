@@ -123,6 +123,7 @@ export function NewStage() {
       );
     } finally {
       setIsSubmitting(false);
+      navigate(`/nova-guia/${guideId}`)
     }
   }
 

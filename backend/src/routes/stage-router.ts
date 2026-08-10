@@ -14,4 +14,8 @@ stageRouter.post(
   stageController.create,
 );
 
+stageRouter.get(
+  "/guide/:id",stageController.show,
+);
+
 export { stageRouter };

@@ -15,7 +15,9 @@ function getUploadedFiles(request: Request) {
   };
 }
 
-async function removeUploadedFiles(files: Array<Express.Multer.File | undefined>) {
+async function removeUploadedFiles(
+  files: Array<Express.Multer.File | undefined>,
+) {
   await Promise.all(
     files.map(async (file) => {
       if (!file) return;
@@ -65,6 +67,20 @@ class StageController {
       await removeUploadedFiles([picture, video]);
       throw error;
     }
+  }
+
+  async show(request: Request, response: Response) {
+    const paramsSchema = z.object({
+      id: z.uuid(),
+    });
+
+    const { id } = paramsSchema.parse(request.params);
+
+    const stages = await prisma.stage.findMany({
+      where: { guideId: id },
+    });
+
+    return response.json(stages);
   }
 }
 

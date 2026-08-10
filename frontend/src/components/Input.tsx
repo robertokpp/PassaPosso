@@ -7,7 +7,7 @@ type Props = React.ComponentProps<"input"> & {
 export function Input({ legend, className, ...Rest }: Props) {
   return (
     <fieldset>
-      <legend className="uppercase text-[#79716B]">{legend}</legend>
+      <legend className="uppercase mb-1.5 text-[#79716B]">{legend}</legend>
       <input
         type="text"
         className={twMerge(

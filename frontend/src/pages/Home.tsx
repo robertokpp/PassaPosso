@@ -86,6 +86,7 @@ export function Home() {
                 <Button
                   variant="tertiary"
                   className="w-full justify-center text-[#57534D] font-bold"
+                  onClick={() => navigate(`/nova-guia/${guide.id}`)}
                 >
                   Editar
                 </Button>

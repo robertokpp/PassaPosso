@@ -57,7 +57,7 @@ class GuideController {
 
     const guide = await prisma.guide.findUnique({
       where: { id },
-      include: { category: true, stages: true}
+      include: { category: true, stages: true },
     });
 
     if (!guide) {
@@ -65,6 +65,28 @@ class GuideController {
     }
 
     return response.json(guide);
+  }
+
+  async update(request: Request, response: Response) {
+    const paramsSchema = z.object({
+      id: z.uuid(),
+    });
+
+    const bodySchema = z.object({
+      title: z.string().min(3, "Informe um titulo valido!"),
+      description: z.string().min(3, "Informe um descrição valida!"),
+      categoryId: z.string(),
+    });
+
+    const { id } = paramsSchema.parse(request.params);
+    const { title, description, categoryId } = bodySchema.parse(request.body);
+
+    await prisma.guide.update({
+      where: { id },
+      data: { title, description, categoryId },
+    });
+
+    return response.json("Atualizado com sucesso");
   }
 }
 
