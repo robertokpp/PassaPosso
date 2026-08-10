@@ -150,7 +150,11 @@ export function NewGuide() {
         </div>
         {id && (
           <div className="flex flex-col gap-4">
-            <div>
+            <div className="flex justify-between items-center">
+              <div>
+                <strong>Etapas</strong>
+                <span className="text-[#1C1917]/50">{` (${Stages.length})`}</span>
+              </div>
               <Button
                 variant="secondary"
                 className="text-icon"
