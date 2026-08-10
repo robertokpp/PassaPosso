@@ -21,16 +21,30 @@ interface Guide {
 
 export function Home() {
   const [guides, setGuides] = useState<Guide[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
 
   async function handlerListCards() {
-    const response = await api.get("/guide");
-    setGuides(response.data);
+    try {
+      const response = await api.get("/guide");
+      setGuides(response.data);
+    } finally {
+      setIsLoading(false);
+    }
   }
 
   useEffect(() => {
     handlerListCards();
   }, []);
+
+    if (isLoading) {
+    return (
+      <main className="flex justify-center items-center h-screen bg-background text-text">
+        Carregando pagina...
+      </main>
+    );
+  }
+
 
   return (
     <>
@@ -57,6 +71,7 @@ export function Home() {
           </Button>
         </div>
       </Header>
+
       <main>
         <Section>
           <div className="mt-4 flex flex-col gap-4">

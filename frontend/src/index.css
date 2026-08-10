@@ -1,13 +1,12 @@
 @import "tailwindcss";
 
 @theme {
-  
-
   --default-font-family: "Lato", sans-serif;
   --color-icon: #e85d26;
-  --color-background: #F7F3EE;
+  --color-background: #f7f3ee;
+  --color-text: #79716b;
 }
 
-body{
+body {
   font-family: "Outfit";
 }
