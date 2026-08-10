@@ -84,7 +84,7 @@ export function Home() {
                   <span className="px-3 py-0.5 bg-[#FFEDD4] rounded-[999px]">
                     {guide.category}
                   </span>
-                  <small>{formatDate(guide.data)}</small>
+                  <small className="text-[10px] text-text">{formatDate(guide.data)}</small>
                 </div>
 
                 <strong>{guide.title}</strong>
