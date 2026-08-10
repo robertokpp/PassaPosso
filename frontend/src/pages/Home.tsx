@@ -9,6 +9,7 @@ import { useNavigate } from "react-router";
 
 import iconAdd from "../assets/icon-add.svg";
 import iconQuadro from "../assets/icon-quadro.svg";
+import { Section } from "../components/Section";
 
 interface Guide {
   id: string;
@@ -32,7 +33,7 @@ export function Home() {
   }, []);
 
   return (
-    <main className=" bg-background h-full pb-6">
+    <>
       <Header>
         <div className="flex  gap-2 items-center">
           <div className="bg-icon p-2 w-fit h-fit rounded-[10px] flex justify-center items-center">
@@ -56,45 +57,46 @@ export function Home() {
           </Button>
         </div>
       </Header>
+      <main>
+        <Section>
+          <div className="mt-4 flex flex-col gap-4">
+            {guides.map((guide) => (
+              <div
+                key={guide.id}
+                className="flex flex-col w-full gap-2 bg-white p-4 hover:[&_strong]:text-icon rounded-2xl"
+              >
+                <div className="flex justify-between items-center">
+                  <span className="px-3 py-0.5 bg-[#FFEDD4] rounded-[999px]">
+                    {guide.category}
+                  </span>
+                  <small>{formatDate(guide.data)}</small>
+                </div>
 
-      <section className="px-6">
-        <div className="mt-4 flex flex-col gap-4">
-          {guides.map((guide) => (
-            <div
-              key={guide.id}
-              className="flex flex-col w-full gap-2 bg-white p-4 hover:[&_strong]:text-icon rounded-2xl"
-            >
-              <div className="flex justify-between items-center">
-                <span className="px-3 py-0.5 bg-[#FFEDD4] rounded-[999px]">
-                  {guide.category}
-                </span>
-                <small>{formatDate(guide.data)}</small>
+                <strong>{guide.title}</strong>
+
+                <p>{guide.description}</p>
+
+                <div className="flex gap-2">
+                  <Button
+                    variant="secondary"
+                    className="w-full justify-center text-icon font-bold"
+                    onClick={() => navigate(`/guia/${guide.id}`)}
+                  >
+                    Visualizar
+                  </Button>
+                  <Button
+                    variant="tertiary"
+                    className="w-full justify-center text-[#57534D] font-bold"
+                    onClick={() => navigate(`/nova-guia/${guide.id}`)}
+                  >
+                    Editar
+                  </Button>
+                </div>
               </div>
-
-              <strong>{guide.title}</strong>
-
-              <p>{guide.description}</p>
-
-              <div className="flex gap-2">
-                <Button
-                  variant="secondary"
-                  className="w-full justify-center text-icon font-bold"
-                  onClick={() => navigate(`/guia/${guide.id}`)}
-                >
-                  Visualizar
-                </Button>
-                <Button
-                  variant="tertiary"
-                  className="w-full justify-center text-[#57534D] font-bold"
-                  onClick={() => navigate(`/nova-guia/${guide.id}`)}
-                >
-                  Editar
-                </Button>
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
-    </main>
+            ))}
+          </div>
+        </Section>
+      </main>
+    </>
   );
 }

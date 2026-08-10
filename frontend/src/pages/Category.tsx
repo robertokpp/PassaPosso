@@ -8,7 +8,7 @@ import iconAdd from "../assets/icon-add.svg";
 
 import { useNavigate } from "react-router";
 import { useEffect, useState } from "react";
-import { z, ZodError } from "zod";
+import { z } from "zod";
 import { Input } from "../components/Input";
 import { api } from "../services/api";
 import { Section } from "../components/Section";

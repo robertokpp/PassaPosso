@@ -108,12 +108,14 @@ export function NewGuide() {
           Voltar
         </Button>
 
+    
+
         <Button onClick={onSubmit} disabled={isSubmitting}>
           {isSubmitting ? "Salvando..." : "Salvar guia"}
         </Button>
       </header>
 
-      <Section>
+      <Section className="h-screen">
         <div className="rounded-2xl bg-white p-6 flex flex-col gap-4">
           <strong className="text-[24px]">Informações do guia</strong>
 

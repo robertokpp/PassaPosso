@@ -1,9 +1,9 @@
 import { Routes, Route } from "react-router";
 
 import { Home } from "../pages/Home";
-import { NewGuide } from "../pages/NewGuide";
-import { NewStage } from "../pages/NewStage";
-import { NewCategory } from "../pages/NewCategory";
+import { NewGuide } from "../pages/Guide";
+import { NewStage } from "../pages/Stage";
+import { NewCategory } from "../pages/Category";
 import { ViewerGuide } from "../pages/ViewerGuide";
 
 export function HomeRoute() {
