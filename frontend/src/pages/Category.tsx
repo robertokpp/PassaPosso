@@ -104,7 +104,7 @@ export function NewCategory() {
         {categories.map((category) => (
           <div
             key={category.id}
-            className="group flex justify-between bg-white rounded-2xl p-4"
+            className="flex justify-between bg-white rounded-2xl p-4"
           >
             <div className="flex gap-4 items-center">
               <p>{category.name}</p>
@@ -118,10 +118,7 @@ export function NewCategory() {
 
             <div className="flex gap-1">
               <Button variant="secondary" className="p-1">
-                <img
-                  src={iconPen}
-                  className="w-4 h-4 hidden cursor-pointer group-hover:block"
-                />
+                <img src={iconPen} className="w-4 h-4 cursor-pointer" />
               </Button>
 
               {category.guideTotal === 0 && (
@@ -130,10 +127,7 @@ export function NewCategory() {
                   className="p-1"
                   onClick={() => deleteCategory(category.id)}
                 >
-                  <img
-                    src={iconTrash}
-                    className="w-4 h-4 hidden cursor-pointer group-hover:block"
-                  />
+                  <img src={iconTrash} className="w-4 h-4 cursor-pointer" />
                 </Button>
               )}
             </div>
