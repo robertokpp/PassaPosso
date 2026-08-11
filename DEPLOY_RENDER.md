@@ -40,8 +40,8 @@ Clique em **New > Web Service**, conecte o repositório e preencha:
 | Language | `Node` |
 | Branch | `main` ou a branch utilizada |
 | Root Directory | `backend` |
-| Build Command | `npm ci && npx prisma generate && npm run build` |
-| Start Command | `npm start` |
+| Build Command | `npm ci --include=dev && npx prisma generate && npm run build` |
+| Start Command | `npx prisma migrate deploy && npm start` |
 | Health Check Path | `/health` |
 
 Escolha uma versão compatível do Node, preferencialmente **Node 22**.
@@ -58,19 +58,23 @@ Adicione em **Environment**:
 
 Não é necessário definir `PORT`: o Render fornece essa variável automaticamente e a aplicação já a utiliza.
 
-### Executar as migrations
+### Executar as migrations no plano gratuito
 
-Se o plano disponibilizar **Pre-Deploy Command**, configure:
-
-```bash
-npx prisma migrate deploy
-```
-
-Caso essa opção não esteja disponível, após o primeiro build abra **Shell** no serviço da API e execute uma vez:
+O **Pre-Deploy Command** e o **Shell** não estão disponíveis no plano gratuito. Por isso, as migrations fazem parte do Start Command:
 
 ```bash
-npx prisma migrate deploy
+npx prisma migrate deploy && npm start
 ```
+
+Assim, o Render aplica migrations pendentes antes de iniciar a API em cada deploy ou reinício. O comando `prisma migrate deploy` não recria migrations já aplicadas.
+
+O Build Command usa `--include=dev` porque, neste projeto, Prisma e TypeScript estão em `devDependencies` e são necessários para gerar o client e compilar o backend:
+
+```bash
+npm ci --include=dev && npx prisma generate && npm run build
+```
+
+Se uma migration falhar, a API não será iniciada e o erro aparecerá nos logs do serviço. Corrija a migration ou a conexão com o banco e faça um novo deploy.
 
 Depois do deploy, teste:
 
@@ -168,7 +172,8 @@ Altere o backend para enviar os arquivos a um serviço como Cloudinary, Amazon S
 
 - [ ] O PostgreSQL está disponível.
 - [ ] `DATABASE_URL` usa a URL interna do banco.
-- [ ] As migrations foram executadas.
+- [ ] O Start Command contém `npx prisma migrate deploy && npm start`.
+- [ ] Os logs confirmam que as migrations foram executadas.
 - [ ] `https://URL-DA-API/health` retorna `{"status":"ok"}`.
 - [ ] `VITE_API_URL` aponta para a API HTTPS.
 - [ ] `APP_ORIGIN` contém a URL exata do frontend.
