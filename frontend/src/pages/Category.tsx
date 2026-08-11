@@ -5,6 +5,8 @@ import { Modal } from "../components/Modal";
 import iconArrow from "../assets/icon-arrow.svg";
 import iconCheck from "../assets/icon-check.svg";
 import iconAdd from "../assets/icon-add.svg";
+import iconTrash from "../assets/icon-trash-bin.svg";
+import iconPen from "../assets/icon-pen.svg";
 
 import { useNavigate } from "react-router";
 import { useEffect, useState } from "react";
@@ -18,7 +20,9 @@ const bodySchema = z.object({
 });
 
 interface categories {
+  id: string;
   name: string;
+  guideTotal: number;
 }
 
 export function NewCategory() {
@@ -38,6 +42,12 @@ export function NewCategory() {
         name,
       });
       await api.post("/category", data);
+
+      setName("");
+      setIsOpen(false);
+      fetchHandlerCategory();
+
+      alert("Salvo com sucesso");
     } catch (error) {
       if (error instanceof z.ZodError) {
         setErrorMessage(error.issues[0]?.message ?? "Dados inválidos.");
@@ -49,13 +59,30 @@ export function NewCategory() {
     }
   }
 
-  async function handlerListCategory() {
+  async function fetchHandlerCategory() {
     const response = await api.get("/category");
+    console.log(response.data);
     setCategories(response.data);
   }
 
+  async function deleteCategory(id: string) {
+    console.log(id);
+    const confirmed = window.confirm("Deseja realmente deletar a categoria?");
+
+    if (!confirmed) return;
+
+    try {
+      await api.delete(`/category/${id}`);
+
+      alert("Deletado com sucesso.");
+      fetchHandlerCategory();
+    } catch (error) {
+      console.error("Erro ao deletar a categoria:", error);
+    }
+  }
+
   useEffect(() => {
-    handlerListCategory();
+    fetchHandlerCategory();
   }, []);
 
   return (
@@ -73,12 +100,43 @@ export function NewCategory() {
       </Header>
 
       <Section>
-        <div className="flex flex-col gap-2">
-
-        </div>
+        <div className="flex flex-col gap-2"></div>
         {categories.map((category) => (
-          <div className="bg-white rounded-2xl p-4">
-            <p>{category.name}</p>
+          <div
+            key={category.id}
+            className="group flex justify-between bg-white rounded-2xl p-4"
+          >
+            <div className="flex gap-4 items-center">
+              <p>{category.name}</p>
+
+              {category.guideTotal === 1 ? (
+                <small className="text-[10px]">{`${category.guideTotal} guia`}</small>
+              ) : (
+                <small className="text-[10px]">{`${category.guideTotal} guias`}</small>
+              )}
+            </div>
+
+            <div className="flex gap-1">
+              <Button variant="secondary" className="p-1">
+                <img
+                  src={iconPen}
+                  className="w-4 h-4 hidden cursor-pointer group-hover:block"
+                />
+              </Button>
+
+              {category.guideTotal === 0 && (
+                <Button
+                  variant="secondary"
+                  className="p-1"
+                  onClick={() => deleteCategory(category.id)}
+                >
+                  <img
+                    src={iconTrash}
+                    className="w-4 h-4 hidden cursor-pointer group-hover:block"
+                  />
+                </Button>
+              )}
+            </div>
           </div>
         ))}
       </Section>
@@ -88,23 +146,24 @@ export function NewCategory() {
         isOpen={isOpen}
         onClose={() => setIsOpen(false)}
       >
-        <Input
-          legend="nome *"
-          value={name}
-          onChange={(e) => {
-            setName(e.target.value);
-          }}
-        ></Input>
-
-        <Button onClick={onSubmit} className="w-full">
-          <img src={iconCheck} alt="Ícone de check" />
-          {isSubmitting ? "Salvando..." : "Salvar"}
-        </Button>
-        {errorMessage && (
-          <p role="alert" className="text-sm text-red-600">
-            {errorMessage}
-          </p>
-        )}
+        <div className="flex flex-col gap-4">
+          <Input
+            legend="nome *"
+            value={name}
+            onChange={(e) => {
+              setName(e.target.value);
+            }}
+          ></Input>
+          <Button onClick={onSubmit} className="w-full">
+            <img src={iconCheck} alt="Ícone de check" />
+            {isSubmitting ? "Salvando..." : "Salvar"}
+          </Button>
+          {errorMessage && (
+            <p role="alert" className="text-sm text-red-600">
+              {errorMessage}
+            </p>
+          )}
+        </div>
       </Modal>
     </>
   );

@@ -37,14 +37,13 @@ export function Home() {
     handlerListCards();
   }, []);
 
-    if (isLoading) {
+  if (isLoading) {
     return (
       <main className="flex justify-center items-center h-screen bg-background text-text">
         Carregando pagina...
       </main>
     );
   }
-
 
   return (
     <>
@@ -84,7 +83,9 @@ export function Home() {
                   <span className="px-3 py-0.5 bg-[#FFEDD4] rounded-[999px]">
                     {guide.category}
                   </span>
-                  <small className="text-[10px] text-text">{formatDate(guide.data)}</small>
+                  <small className="text-[10px] text-text">
+                    {formatDate(guide.data)}
+                  </small>
                 </div>
 
                 <strong>{guide.title}</strong>
